@@ -1,0 +1,155 @@
+html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+h5 {
+  text-align: center;
+}
+
+img {
+  width: 100%;
+}
+
+body {
+  height: 100%;
+}
+
+#map { 
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  border-radius: 10px;
+}
+
+#map img {
+  max-width: none;
+}
+
+.widget {
+  top: 30px;
+  position: absolute;
+  background-color: white;
+  border-radius: 7px;
+  border-width: 0px;
+  border-style: solid;
+  border-color: #333;
+  height: 100%;
+  -webkit-box-shadow: 2px 2px 9px 0px rgba(0,0,0,0.40);
+  -moz-box-shadow: 2px 2px 9px 0px rgba(0,0,0,0.40);
+  box-shadow: 2px 2px 9px 0px rgba(0,0,0,0.40);
+}
+
+.widget .title h3{
+  margin: 0;
+  padding: 0;
+  color: white;
+  font-weight: normal;
+  font-size: 18px;
+  text-align: center;
+  line-height: 30px;
+}
+
+#main-widget {
+  height: 700px;
+  right: 30px;
+  width: 350px;
+}
+
+.widget .title {
+  background: #407CFF;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+#region-control {
+  height: 167px;
+}
+
+#default-filter {
+  height: 167px;
+  top: 217px;
+}
+
+#info {
+  padding: 10px 30px;
+  margin: 0px;
+  text-align: justify;
+}
+
+.filter {
+  left: 30px;
+  width: 200px;
+}
+
+.filter ul {
+  list-style-type: none;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.filter li {
+  height: 45px;
+  line-height: 45px;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 0 15px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.filter li:hover {
+  color: #407CFF;
+}
+
+.filter li.active {
+  background-color: #CADAFC;
+}
+
+.filter li.bottom {`
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
