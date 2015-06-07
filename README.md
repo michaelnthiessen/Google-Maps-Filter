@@ -2,7 +2,9 @@
 
 This program will take any JSON data and automatically create a map with custom filters based on the properties of the JSON objects. It also will take any HTML content and display it in a sidebar. All that is needed are geographical coordinates, and some properties to filter on. The map will also automatically zoom and pan to fit the locations that are currently being displayed.
 
-Written in vanilla Javascript plus some jQuery.
+It is easily customizable by modifying the `config` object and CSS classes.
+
+Written in vanilla Javascript plus a bit of jQuery.
 
 For example, we have the JSON data:
 
