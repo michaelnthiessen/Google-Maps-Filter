@@ -1,3 +1,6 @@
+/*
+ * This is the test data for the app
+ */
 var JSONData = [
             {
                 position: new google.maps.LatLng(40.74844,-73.985664),
@@ -36,11 +39,38 @@ var JSONData = [
             }
         ];
 
-var HIGHLIGHTED_ICON = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
-var NORMAL_ICON = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+/*
+ * Configuration object so that other developers can
+ * use and extend the script
+ */
+var config = {
+    html: {
+        noInfo: '<br><br><h5>Sorry, there is nothing to display.</h5>',
+    },
+    icons: {
+        highlightedIconUrl: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+        normalIconUrl: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+    },
+    map: {
+        mapElementId: 'map', // HTML element to place the map in
+        initialZoom: 3,
+        maxZoom: 13,
+        mapTypeId: google.maps.MapTypeId.ROAD_MAP,
+        animation: google.maps.Animation.DROP,
+        disableDefaultUI: true,
+        latMultiplier: 1.5,     // Used when centering the viewport
+        lngMultiplier: 3.0      // over the points of interest
+    }
+};
+
+/*
+ * ====================================
+ * This is where the real fun begins
+ * ====================================
+ */
 
 // Our main controller
-var app = (function () {
+var app = (function (config) {
     var that = {};
 
     // ----------- Private -----------
@@ -48,8 +78,6 @@ var app = (function () {
     var filter = {};
     var markersOnMap = [];
     var currentlyDisplayedMarker;
-    var MAX_ZOOM = 13;
-    var NO_INFO = '<br><br><h5>Sorry, there is nothing to display.</h5>';
 
     that.markers = [];
 
@@ -59,23 +87,24 @@ var app = (function () {
         // Initialize with some random center point
         var mapOptions = {
             center: new google.maps.LatLng(0, 0),
-            zoom: 3,
-            disableDefaultUI: true,
-            mapTypeId: google.maps.MapTypeId.ROAD_MAP,
-            maxZoom: MAX_ZOOM
+            zoom: config.map.initialZoom,
+            disableDefaultUI: config.map.disableDefaultUI,
+            mapTypeId: config.map.mapTypeId,
+            maxZoom: config.map.maxZoom
         };
 
-        map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        map = new google.maps.Map(document.getElementById(config.map.mapElementId), mapOptions);
     };
 
     // Add click handlers to our filters
     var addEventsToFilters = function() {
+        var activeClass = 'active';
 
         // Click handler function
         var handler = function(self, property) {
             return function () {
-                $('#' + property).find('li').removeClass('active');
-                $(self).addClass('active');
+                $('#' + property).find('li').removeClass(activeClass);
+                $(self).addClass(activeClass);
                 filter[property] = $(self).text();
                 updateMarkersOnMap();
             };
@@ -129,8 +158,6 @@ var app = (function () {
 
         // Add a filter for each different property
         for (property in properties) {
-            console.log( property );
-
             newFilter = "<div id='newDiv' class='widget filter'><div class='title'><h3>Title</h3></div><div><ul><li class='active'>All</li></ul></div></div>"
 
             // Append it to the body
@@ -229,14 +256,14 @@ var app = (function () {
 
         } else {
             currentlyDisplayedMarker = null;
-            that.updateInformation( NO_INFO );
+            that.updateInformation( config.html.noInfo );
         }
     };
 
     // Reset all the marker icons to normal
     var resetIcons = function(markers) {
         markers.forEach(function(marker) {
-            marker.setIcon(NORMAL_ICON);
+            marker.setIcon(config.icons.normalIconUrl);
         });
     };
 
@@ -253,8 +280,8 @@ var app = (function () {
         var southWest = bounds.getSouthWest();
         var center = bounds.getCenter();
 
-        var latMultiplier = 1.5;
-        var lngMultiplier = 3.0;
+        var latMultiplier = config.map.latMultiplier;
+        var lngMultiplier = config.map.lngMultiplier;
 
         // Increase the distance between the center and the NE and SW points
         var latDiff = (northEast.lat() - center.lat()) * latMultiplier;
@@ -296,17 +323,17 @@ var app = (function () {
 
     that.selectMarker = function(marker) {
         resetIcons(markersOnMap);
-        marker.setIcon(HIGHLIGHTED_ICON);
+        marker.setIcon(config.icons.highlightedIconUrl);
         that.updateInformation(marker.info);
         currentlyDisplayedMarker = marker;
     };
 
     return that;
 
-})();
+})(config);
 
 // Create our data model
-var Model = (function() {
+var Model = (function(config) {
     var that = {};
 
     data = JSONData;
@@ -328,9 +355,9 @@ var Model = (function() {
 
         var i, length;
         for (i = 0, length = data.length; i < length; i++) {
-            data[i]['animation'] = google.maps.Animation.DROP;
+            data[i]['animation'] = config.map.animation;
             var newMarker = new google.maps.Marker(data[i]);
-            newMarker.setIcon(NORMAL_ICON);
+            newMarker.setIcon(config.icons.normalIconUrl);
             google.maps.event.addListener(newMarker, 'click', helper(newMarker));
             allMarkers.push(newMarker);
         }
@@ -421,7 +448,7 @@ var Model = (function() {
     };
 
     return that;
-})();
+})(config);
 
 var helper = (function() {
     that = {};
